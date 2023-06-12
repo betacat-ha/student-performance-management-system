@@ -99,7 +99,7 @@ int main(void)
     return 0;
 }
 
-
+// 输入学生成绩
 void scoreInput(struct student *p) {
     int count, i, m;
     char ch;
@@ -178,7 +178,7 @@ void scoreInput(struct student *p) {
         }
 
         // 计算平均分
-        p[count].average = p[count].sum / p[count].courseNumber;
+        p[count].average = p[count].sum / p[0].courseNumber;
 
         fflush(stdin);
 
@@ -198,4 +198,89 @@ void scoreInput(struct student *p) {
             return;
         }
     }
+}
+
+// 修改学生成绩
+void scoreModify(struct student *p) {
+    int i, j, k, m = 0, count, tempNumber, tempNumber2;
+
+    // 读取学生成绩,并统计当前学生成绩数据库中学生成绩记录总数
+    count = readScores(p);
+
+    if(count == 0) {
+        printf("\n还没有输入成绩，按任意键返回主菜单！");
+        getch();
+        return;
+    }
+
+    printf("请输入要修改成绩的学生学号：");
+    scanf("%d", &tempNumber);
+    fflush(stdin);
+
+    for (i = 0; i < count; i++) {
+        if (tempNumber != p[i].number) {
+            continue;
+        } else {
+            printf("学号为%d的学生的成绩：\n", tempNumber);
+            printRecord(&p[i]);
+            printf("修改该学生的成绩信息\n");
+            printf("------------------------------------------------\n");
+            printf("学生学号：");
+            scanf("%d", &p[i].number);
+            tempNumber2 = p[i].number;
+            fflush(stdin);
+
+            printf("学生姓名：");
+            gets(p[i].name);
+            fflush(stdin);
+
+            p[i].sum = 0;
+            for (j = 0; j < p[0].courseNumber; j++) {
+                printf("第%d门课程%s成绩：", j + 1, p[i].course[j]);
+                scanf("%lf", &p[i].score[j]);
+                p[i].sum += p[i].score[j];
+            }
+
+            // 计算平均分
+            p[i].average = p[i].sum / p[0].courseNumber;
+
+            printf("------------------------------------------------\n");
+
+            printf("修改后学号为%d学生的成绩信息：\n", tempNumber);
+            printRecord(p+i,1);
+            fp = open("学生成绩数据库.dat", "w+b");
+
+            for (k = 0; k < count; k++) {
+                if (fwrite(&p[k], sizeof(struct student), 1, fp) != 1) {
+                    printf("修改失败，按任意键返回主菜单！\n");
+                    getch();
+                    system("cls");
+                    return;
+                }
+
+                fclose(fp);
+
+                for(k = 0; k < count; k++) {
+                    if(tempNumber2 == p[k].number) m++;
+                }
+
+                if(m>1) {
+                    printf("管理员提示：有[%d]位同学的学号重号了！！按任意键返回主菜单重新修改\n", m);
+                } else {
+                    printf("修改成功，按任意键返回主菜单！\n");
+                }
+
+                getch();
+                system("cls");
+                return;
+            }
+        }
+
+        printf("没有找到学号为%d的学生，按任意键返回主菜单！", tempNumber);
+
+        getch();
+        system("cls");
+        return;
+    }
+
 }
