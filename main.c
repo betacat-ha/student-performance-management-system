@@ -284,3 +284,78 @@ void scoreModify(struct student *p) {
     }
 
 }
+
+// 查询学生成绩
+void scoreQuery(struct student *p) {
+    char *tempName;
+    int choice, tempNumber;
+    int i, j, k, count;
+    count = readScores(p);
+
+    if(count == 0) {
+        printf("\n还没有输入成绩，按任意键返回主菜单！");
+        getch();
+        return;
+    }
+
+    while(1) {
+        system("cls");
+        printf("<1.按姓名查询 2.按学号查询 3.返回主菜单>\n");
+        printf("请按数字键1~3，进行相应操作：");
+        scanf("%d", &choice);
+        fflush(stdin);
+
+        if(choice == 1) {
+            tempName = (char *)malloc(sizeof(char) * 20);
+            printf("请输入要查询成绩的学生姓名：");
+            gets(tempName);
+            fflush(stdin);
+            
+            k=0;
+            for(i=0; i<count; i++) {
+                if(strcmp(tempName, p[i].name) == 0) {
+                    printf("学号为%d的学生的成绩：\n", p[i].number);
+                    printRecord(p+i,1);
+                    k++;
+                } else {
+                    continue;
+                }
+            }
+
+            if (k>0) {
+                printf("查询完成，共查询到%d条记录，按任意键继续！", k);
+            } else {
+                printf("没有找到学生%s的成绩，按任意键继续！", tempName);
+            }
+            getch();
+            system("cls");
+        } else if(choice == 2) {
+            printf("请输入要查询成绩的学生学号：");
+            scanf("%d", &tempNumber);
+            fflush(stdin);
+
+            k=0;
+            for(i=0; i<count; i++) {
+                if(tempNumber == p[i].number) {
+                    printf("学号为%d的学生的成绩：\n", tempNumber);
+                    printRecord(p+i,1);
+                    k++;
+                } else {
+                    continue;
+                }
+            }
+
+            if (k>0) {
+                printf("查询完成，共查询到%d条记录，按任意键继续！", k);
+            } else {
+                printf("没有找到学号为%d的学生的成绩，按任意键继续！", tempNumber);
+            }
+            
+            getch();
+            system("cls");
+        } else {
+            system("cls");
+            return;
+        }
+    }
+}
