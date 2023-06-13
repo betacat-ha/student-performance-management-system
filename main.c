@@ -14,7 +14,8 @@ struct student
     double sum;          // 总分
 };
 
-/****************函数说明******************/
+// MARK: 函数声明
+
 void scoreInput(struct student *p);  // 输入学生成绩
 void scoreModify(struct student *p); // 修改学生成绩
 void scoreQuery(struct student *p);  // 查询学生成绩
@@ -22,6 +23,7 @@ void scoreBrowse(struct student *p); // 浏览学生成绩
 void scoreDelete(struct student *p); // 删除学生成绩
 void printRecord(struct student *p); // 打印学生成绩
 int readScores(struct student *p);   // 读取学生成绩
+
 int main(void)
 {
     struct student stusorelib[100]; // 学生成绩库
