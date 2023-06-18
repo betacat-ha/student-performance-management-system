@@ -45,20 +45,20 @@ int main(void) {
     char userName[100];
     char password[100];
 
-    //printf("\n\t\t    请输入管理员账号：");
-    //scanf("%s", userName);
+    printf("\n\t\t    请输入管理员账号：");
+    scanf("%s", userName);
 
-    //printf("\t\t    请输入管理员密码：");
-    //scanf("%s", password);
+    printf("\t\t    请输入管理员密码：");
+    scanf("%s", password);
 
-    //if (strcmp(userName, USER_NAME) != 0 || strcmp(password, USER_PASSWORD) != 0) {
-    //    printf("\t\t    管理员账号或密码不正确，即将退出系统！");
-    //    Sleep(3000);
-    //    exit(0);
-    //}
+    if (strcmp(userName, USER_NAME) != 0 || strcmp(password, USER_PASSWORD) != 0) {
+        printf("\t\t    管理员账号或密码不正确，即将退出系统！");
+        Sleep(3000);
+        exit(0);
+    }
 
-    //printf("\t\t    %s，欢迎使用本系统，正在加载...", userName);
-    //Sleep(1000);
+    printf("\t\t    %s，欢迎使用本系统，正在加载...", userName);
+    Sleep(1000);
     adminView();
 
     while (1) {
@@ -395,7 +395,7 @@ void scoreBrowse(struct student* p) {
     int amount = 0;// 经过筛选后的总数
     
     while (1){
-        printf("<【1】按学号顺序浏览  【2】按总成绩由大到小顺序浏览  【3】按科目成绩大小浏览  【4】返回主菜单>\n");
+        printf("<【1】按学号顺序浏览  【2】按总成绩由大到小顺序浏览  【3】按科目成绩由大到小顺序浏览  【4】返回主菜单>\n");
         printf("请按数字键1-4,选择浏览方式:");
         scanf("%d", &sequenceChoice);
 
@@ -406,7 +406,7 @@ void scoreBrowse(struct student* p) {
 
         int filterChoice, classNameFilter = 0, termFilter = 0, term = 0;
         char className[10];
-        printf("<【0】全部（默认）  【1】按班级  【2】按学期  【3】按班级和学期>\n");
+        printf("<【0】全部（默认）  【1】按班级浏览  【2】按学期浏览  【3】按班级和学期浏览>\n");
         printf("请按数字键0-3,筛选数据:");
         scanf("%d", &filterChoice);
         switch (filterChoice) {
